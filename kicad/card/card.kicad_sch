@@ -4021,12 +4021,6 @@
 		(uuid "80028f94-73d1-4880-b7d2-97a22da9bafb")
 	)
 	(junction
-		(at 59.69 62.23)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "844e8321-5986-4451-a0c7-f195ee18fd94")
-	)
-	(junction
 		(at 196.85 27.94)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -5716,7 +5710,7 @@
 	)
 	(wire
 		(pts
-			(xy 59.69 62.23) (xy 66.04 62.23)
+			(xy 57.15 62.23) (xy 66.04 62.23)
 		)
 		(stroke
 			(width 0)
@@ -5856,16 +5850,6 @@
 	)
 	(wire
 		(pts
-			(xy 57.15 62.23) (xy 59.69 62.23)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "c3e3c4fe-00db-42d7-918e-7dc0e996f98c")
-	)
-	(wire
-		(pts
 			(xy 62.23 49.53) (xy 160.02 49.53)
 		)
 		(stroke
@@ -5883,16 +5867,6 @@
 			(type default)
 		)
 		(uuid "c4a9d9db-c2e2-44c6-b454-fa0bc680a06a")
-	)
-	(wire
-		(pts
-			(xy 59.69 64.77) (xy 59.69 62.23)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "c77f1b2c-230f-4dfe-a33c-d2ad751a465d")
 	)
 	(wire
 		(pts
@@ -6471,7 +6445,7 @@
 				)
 			)
 		)
-		(property "Value" "SW_Push"
+		(property "Value" "USB_BOOT"
 			(at 246.38 53.34 0)
 			(effects
 				(font
@@ -6820,7 +6794,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm"
 			(at 25.4 69.85 0)
 			(effects
 				(font
@@ -7159,7 +7133,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 153.67 39.37 0)
 			(effects
 				(font
@@ -7491,7 +7465,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "RP2350_60QFN"
+		(property "Value" "RP2350A"
 			(at 199.136 132.334 0)
 			(effects
 				(font
@@ -8012,7 +7986,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "ABM8-272-T3"
+		(property "Value" "12MHz"
 			(at 253.492 97.282 90)
 			(effects
 				(font
@@ -8039,7 +8013,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "ABM8-272-T3"
 			(at 246.38 90.17 0)
 			(effects
 				(font
@@ -8087,7 +8061,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "W25Q128JVS"
+		(property "Value" "W25Q128"
 			(at 266.192 55.88 0)
 			(effects
 				(font
@@ -8252,7 +8226,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 66.04 64.77 0)
 			(effects
 				(font
@@ -8321,7 +8295,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0805_2012Metric"
+		(property "Footprint" "LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder"
 			(at 66.04 71.12 0)
 			(effects
 				(font
@@ -8583,7 +8557,7 @@
 				)
 			)
 		)
-		(property "Value" "SW_Push"
+		(property "Value" "RESET"
 			(at 231.14 98.7861 0)
 			(effects
 				(font
@@ -9061,7 +9035,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 153.67 41.91 0)
 			(effects
 				(font
@@ -9947,6 +9921,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
+		(fields_autoplaced yes)
 		(uuid "fb7a3850-02a0-447d-aaab-66619effa7e4")
 		(property "Reference" "A1"
 			(at 40.386 91.694 90)
@@ -9966,7 +9941,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "M.2:NGFF_E"
+		(property "Footprint" "DEFAULT:E_Key"
 			(at 43.688 91.694 90)
 			(effects
 				(font
