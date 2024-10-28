@@ -24,7 +24,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "M.2:NGFF_E"
+		(property "Footprint" "M.2:E_Key"
 			(at -5.588 -1.27 0)
 			(effects
 				(font
@@ -51,7 +51,7 @@
 				(hide yes)
 			)
 		)
-		(symbol "E_Key_0_1"
+		(symbol "E_Key_1_1"
 			(rectangle
 				(start -26.67 2.54)
 				(end 26.67 -8.89)
@@ -63,8 +63,6 @@
 					(type none)
 				)
 			)
-		)
-		(symbol "E_Key_1_1"
 			(pin power_in line
 				(at -10.16 5.08 270)
 				(length 2.54)
@@ -513,6 +511,68 @@
 							(size 1.27 1.27)
 						)
 					)
+				)
+			)
+		)
+	)
+	(symbol "QR_8x8"
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "QR"
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" ""
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(symbol "QR_8x8_0_1"
+			(rectangle
+				(start -4.0132 4.0132)
+				(end 4.0132 -4.0132)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type color)
+					(color 255 255 255 1)
 				)
 			)
 		)
