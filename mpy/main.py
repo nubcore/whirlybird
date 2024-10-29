@@ -1,115 +1,119 @@
-print("Whirlybird by DEFAULT [EXPERIMENTAL]")
+# BNO08x Micropython I2C Test programm by Dobodu
+#
+# This program set up an I2C connection to the BNO08x device
+# Then Create a BNO08x class based object
+# Then enables sensors
+# And finally report sensors every 0.5 seconds.
+#
+# Original Code from Adafruit CircuitPython Library
 
-from machine import Pin, SoftI2C, Timer, UART
-from micropython import const
+# Updates to integrate with whilrlybird DF'n by DEFAULT
+
+from machine import I2C, Pin
+import time
 from time import sleep_ms
-from neopixel import NeoPixel
-from pi4ioe5v6416 import PI4IOE5V6416
-from pca9632 import PCA9632
-from rs41 import RS41
+import math
+from bno08x_i2c import *
+import neopixel
 
-_NEO_A_COUNT = const(24)
-_NEO_B_COUNT = const(8)
-_NEO_A_PIN = const(42)
-_NEO_B_PIN = const(41)
+NEO_COUNT = 32
+NEO_DELAY = 50
 
-count = 0
-
-npA = NeoPixel(Pin(_NEO_A_PIN), _NEO_A_COUNT, bpp=4)
-npB = NeoPixel(Pin(_NEO_B_PIN), _NEO_B_COUNT, bpp=4)
-
-npA.fill((1,0,0,0))
-npB.fill((0,0,0,0))
-npA.write()
-npB.write()
+np = neopixel.NeoPixel(Pin(44), NEO_COUNT, bpp=4)
 
 I2C1_SDA = Pin(5)
 I2C1_SCL = Pin(4)
 
-# Whirlybird I2C (4+ devices connected)
-i2c = SoftI2C(scl=4, sda=5, freq=100_000)
-
-sleep_ms(100)
-
-xio = PI4IOE5V6416(i2c)
-leds = PCA9632(i2c)
-
-# Enable RS41 RESET
-xio.outputEnable(0, 3)
-
-def rs41Reset(reset=True):
- if reset:
-  xio.output(0,3,1)
-  npB.fill((0,0,0,0))
-  npB.write()
- else:
-  xio.output(0,3,0)
-  npB.fill((0,0,1,0))
-  npB.write()
-
-sonde = RS41(rs41Reset)
-
-npA.fill((0,1,0,0))
-npA.write()
-
 def rgbw(p):
- npA[p] = (0, 0, 0, 1)
- npA.write()
+ np[p] = (0, 0, 0, 1)
+ np.write()
  sleep_ms(NEO_DELAY)
 
 def ring():
  for i in range(24,32):
   rgbw(i)
-  npA.fill((0,0,0,0))
-  npA.write()
+  np.fill((0,0,0,0))
+  np.write()
  for i in range(23,-1, -1):
   rgbw(i)
- npA.fill((0,0,0,0))
- npA.write()
+ np.fill((0,0,0,0))
+ np.write()
 
-def updateRing():
- npA.fill((0,0,0,0))
- if sonde.temperature > 0:
-  f = int(sonde.temperature * 1.8 + 32)
-  j = f - 74
-  print(f, j)
-  for i in range(j):
-   npA[i] = (2,0,0,0)
- npA.write()
+ring()
 
-#sleep_ms(100)
-#leds.blink()
 
-#ring()
+i2c1 = I2C(1, scl=I2C1_SCL, sda=I2C1_SDA, freq=100000, timeout=200000 )
+#print("I2C Device found at address : ",i2c1.scan(),"\n")
+bno = BNO08X_I2C(i2c1, debug=False)
+print("BNO08x I2C connection : Done\n")
 
-def loop(t):
- global count
- count += 1
- if count > 1000: # 1 minute interval
-  count = 0
-  updateRing()
+bno.enable_feature(BNO_REPORT_ACCELEROMETER)
+bno.enable_feature(BNO_REPORT_GYROSCOPE)
+#bno.enable_feature(BNO_REPORT_GEOMAGNETIC_ROTATION_VECTOR)
+#bno.enable_feature(BNO_REPORT_MAGNETOMETER)
+bno.enable_feature(BNO_REPORT_ROTATION_VECTOR)
+#bno.enable_feature(BNO_REPORT_ACTIVITY_CLASSIFIER)
+#bno.enable_feature(BNO_REPORT_STABILITY_CLASSIFIER)
 
-timer0 = Timer(0)
-timer0.init(period=20, mode=Timer.PERIODIC, callback=loop)
+print("BNO08x sensors enabling : Done\n")
 
-#sleep_ms(100)
-#sonde.enable()
-#sleep_ms(5000)
-#sonde.measurementsSensors('10')
-#sleep_ms(1000)
-#updateRing()
+def tilt():
+#26/30 left/right, 28/31 down/up
+ x,y,z = bno.acceleration
+ np.fill((0,0,0,0))
+ if x < -1:
+  np[26] = (int(x*-3),0,0,0)
+ elif x > 1:
+  np[30] = (int(x*3),0,0,0)
+ if y < -1:
+  np[31] = (0,int(y*-3),0,0)
+ elif y > 1:
+  np[28] = (0,0,int(y*3),0)
+ #print("X: %0.6f\tY: %0.6f\tZ: %0.6f" % (x,y,z))
 
-#sondeConnected = False
-#xio.output(0,3,0)
+def turn():
+ x,y,z = bno.euler
+ r = z + 180 - 13
+ if r < 0:
+  r += 360
+ #print(z,r)
+ np[int(r/15)] = (0,0,0,5)
+ np.write()
 
-#while not sondeConnected:
-# pass
+def classifier():
+ print(bno.stability_classification, bno.activity_classification["most_likely"])
 
-#print("\nRS41 Talking")
-#sleep_ms(100)
-#print("Requesting Menu")
-#uart.write('\r')
-#sleep_ms(100)
-#uart.write('STwsv\r')
+def loop():
+ while True:
+  tilt()
+  turn()
+  #classifier()
+  sleep_ms(50)
 
-#xio.output(0,3,1)
+loop()
+
+#cpt = 0
+
+#while True:
+#    time.sleep(0.5)
+#    cpt += 1
+#    geo_x, geo_y, geo_z, geo_w = bno.geomagnetic_quaternion
+#    mag_x, mag_y, mag_z = bno.magnetic  # pylint:disable=no-member
+#    heading = math.atan2(mag_x, mag_y) * 180 / math.pi
+
+#    print("%0.f Geo\tX: %0.6f\tY: %0.6f\tZ: %0.6f\tW: %0.6f\tMag X: %0.6f\tY: %0.6f\tZ: %0.6f\tuT %d" % (heading, geo_x, geo_y, geo_z, geo_w, mag_x, mag_y, mag_z, cpt))
+    #if cpt == 10 :
+    #    bno.tare
+
+
+#    print("cpt", cpt)
+#    accel_x, accel_y, accel_z = bno.acceleration  # pylint:disable=no-member
+#    print("Acceleration\tX: %0.6f\tY: %0.6f\tZ: %0.6f\tm/s²" % (accel_x, accel_y, accel_z))
+#    gyro_x, gyro_y, gyro_z = bno.gyro  # pylint:disable=no-member
+#    print("Gyroscope\tX: %0.6f\tY: %0.6f\tZ: %0.6f\trads/s" % (gyro_x, gyro_y, gyro_z))
+
+#    quat_i, quat_j, quat_k, quat_real = bno.quaternion  # pylint:disable=no-member
+#    print("Rot Vect Quat\tI: %0.6f\tJ: %0.6f\tK: %0.6f\tReal: %0.6f" % (quat_i, quat_j, quat_k, quat_real))
+#    R, T, P = bno.euler
+#    print("Euler Angle\tX: %0.1f\tY: %0.1f\tZ: %0.1f" % (R, T, P))
+#    print("")
