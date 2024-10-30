@@ -1,4 +1,4 @@
-23906326914552792
+23899707702385813
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -54691,6 +54691,13 @@ SMD SMT ceramic resonator filter filter hand-soldering
 3
 3
 DEFAULT
+Crystal_SMD_HC49-US
+SMD Crystal HC-49-SD http://cdn-reichelt.de/documents/datenblatt/B400/xxx-HC49-SMD.pdf, 11.4x4.7mm^2 package
+SMD SMT crystal
+0
+2
+2
+DEFAULT
 E_Key
 
 
@@ -54698,12 +54705,33 @@ E_Key
 68
 68
 DEFAULT
+L_pol_2016
+Inductor with Polarity Marking 2016
+
+0
+2
+2
+DEFAULT
+QFN28_BNO086_CEV
+
+BNO086 
+0
+28
+28
+DEFAULT
 QR_8x8
 
 
 0
 0
 0
+DEFAULT
+RP2350-QFN-60-1EP_7x7_P0.4mm_EP3.4x3.4mm_ThermalVias
+Raspberry Pi RP2350 QFN-60
+QFN DFN_QFN
+0
+74
+61
 Diode_SMD
 D_0201_0603Metric
 Diode SMD 0201 (0603 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: https://www.vishay.com/docs/20052/crcw0201e3.pdf), generated with kicad-footprint-generator
@@ -86834,41 +86862,6 @@ WiFi IEEE802.11 b/g/n
 0
 44
 44
-RP2350_60QFN_minimal
-C_0402_1005Metric_small_pads
-Capacitor SMD 0402 (1005 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator
-capacitor
-0
-2
-2
-RP2350_60QFN_minimal
-Crystal_SMD_HC49-US
-SMD Crystal HC-49-SD http://cdn-reichelt.de/documents/datenblatt/B400/xxx-HC49-SMD.pdf, 11.4x4.7mm^2 package
-SMD SMT crystal
-0
-2
-2
-RP2350_60QFN_minimal
-L_pol_2016
-Inductor with Polarity Marking 2016
-
-0
-2
-2
-RP2350_60QFN_minimal
-RP2350-QFN-60-1EP_7x7_P0.4mm_EP3.4x3.4mm_ThermalVias
-Raspberry Pi RP2350 QFN-60
-QFN DFN_QFN
-0
-74
-61
-RP2350_60QFN_minimal
-USB_Micro-B_Amphenol_10103594-0001LF_Horizontal_modified
-Micro USB Type B 10103594-0001LF, http://cdn.amphenol-icc.com/media/wysiwyg/files/drawing/10103594.pdf
-USB USB_B USB_micro USB_OTG
-0
-17
-6
 Relay_SMD
 Relay_2P2T_10x6mm_TE_IMxxG
 Signal Relay, 10x6mm, 2 Form C, Gull Wings, https://www.te.com/commerce/DocumentDelivery/DDEController?Action=showdoc&DocId=Data+Sheet%7F108-98001%7FZ.1%7Fpdf%7FEnglish%7FENG_DS_108-98001_Z.1.pdf
@@ -96858,24 +96851,3 @@ Varistor VF
 0
 2
 2
-footprints
-QFN28_BNO086_CEV
-
-BNO086 
-0
-28
-28
-footprints
-QFN28_BNO086_CEV-L
-
-BNO086 
-0
-28
-28
-footprints
-QFN28_BNO086_CEV-M
-
-BNO086 
-0
-28
-28
