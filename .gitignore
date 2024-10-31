@@ -14,3 +14,4 @@ fp-info-cache# Netlist files (exported from Eeschema)
 *.ses
 *.zip
 *~*.lck
+*auto_saved_files*
