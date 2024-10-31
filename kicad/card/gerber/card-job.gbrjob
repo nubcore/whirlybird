@@ -5,13 +5,13 @@
       "Application": "Pcbnew",
       "Version": "8.0.5"
     },
-    "CreationDate": "2024-10-28T11:27:37-07:00"
+    "CreationDate": "2024-10-30T18:42:27-07:00"
   },
   "GeneralSpecs": {
     "ProjectId": {
       "Name": "card",
       "GUID": "63617264-2e6b-4696-9361-645f70636258",
-      "Revision": "rev?"
+      "Revision": "v0.5"
     },
     "Size": {
       "X": 30.05,
