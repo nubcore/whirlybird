@@ -1,21 +1,36 @@
 $fn=256;
 pcb_d=123;
+bat_w=65;
+bat_l=113;
+bat_h = 5.5;
 pcb_h=1.5;
 top_h = 2;
-bot_h = 6;
+bot_h = 6+bat_h;
 max_h = pcb_h+top_h+bot_h;
 
 clearance = 1;
-wall_h = 1.2;
+wall_h = 2.54;
 wall_w = 1.6;
 
-difference() {
-case();
-pattern();
+if (true) {
+    case();
+} else {
+    difference() {
+        // case();
+        // pattern();
+        //carve();
+    }
 }
+//pcb();
 //cover();
+//base();
 //electronics();
 //battery();
+
+module carve() {
+    cube([90,60,10],center=true);
+    cube([54,106,10],center=true);
+}
 
 module pattern() {
   translate([17,-72,-.79]) {
@@ -71,17 +86,34 @@ module tri_hept(x=0,y=0,flip=false,dupe=false) {
 module case() {    
    difference() {
        // Outter surface
-        cylinder(r=pcb_d/2+clearance+wall_w,h=max_h+clearance*2+wall_h);
+       translate([0,0,wall_h])
+        cylinder(r=pcb_d/2+clearance+wall_w,h=max_h+clearance*2);
 
         translate([100+wall_w+clearance,0,0])
         cube([100,100,40],center=true);
         translate([-100-wall_w-clearance,0,0])
         cube([100,100,40],center=true);
-        
+       
+       // Battery Expansion
+       translate([0,0,bat_h+clearance/4])
+                cube([bat_w+clearance*2,bat_l+clearance*2,bat_h+clearance*2],center=true);
+       translate([-bat_w/2-clearance+7.1,-bat_l/2-clearance+7.1,bat_h+clearance+wall_h])
+                rotate([0,0,45])
+                cylinder(10,10,0,$fn=4);
+        translate([bat_w/2+clearance-7.1,-bat_l/2-clearance+7.1,bat_h+clearance+wall_h])
+                rotate([0,0,45])
+                cylinder(10,10,0,$fn=4);
+        translate([-bat_w/2-clearance+7.1,bat_l/2+clearance-7.1,bat_h+clearance+wall_h])
+                rotate([0,0,45])
+                cylinder(10,10,0,$fn=4);
+        translate([bat_w/2+clearance-7.1,bat_l/2+clearance-7.1,bat_h+clearance+wall_h])
+                rotate([0,0,45])
+                cylinder(10,10,0,$fn=4);
+       
         // Inner Surface
         difference() {
-            translate([0,0,wall_h])
-           cylinder(r=pcb_d/2+clearance, h=max_h+clearance*3);
+            translate([0,0,wall_h-2])
+           cylinder(r=pcb_d/2+clearance, h=max_h+clearance*3+2);
             translate([100+clearance,0,0])
         cube([100,100,40],center=true);
         translate([-100-clearance,0,0])
@@ -89,35 +121,88 @@ module case() {
         
         }
         rotate([0,0,-16])
-        translate([0,pcb_d/2+clearance+wall_w/2,bot_h+wall_h+clearance-1.5])
+        translate([0,pcb_d/2+clearance+wall_w/2,bot_h+wall_h+clearance/2])
             cube([10,wall_w*2,5],center=true);
     }
+    
+    // Battery extension
+    difference() {
+        translate([0,0,(bat_h+clearance)/2+wall_h])
+        cube([bat_w+clearance*2+wall_w*2,bat_l+clearance*2+wall_w*2,bat_h+clearance],center=true);
+        translate([0,0,bat_h+1])
+        cube([bat_w+clearance*2,bat_l+clearance*2,bat_h+clearance+2],center=true);
+        cube([bat_w+wall_w+clearance*4,80,30],center=true);
+        cube([49,bat_l+wall_w+clearance*4,30],center=true);
+    }
 
-    pcb_mount(x=1,y=1);
-    pcb_mount(x=1,y=-1);
-    pcb_mount(x=-1,y=1);
-    pcb_mount(x=-1,y=-1);
-}
-
-module battery(w=34,l=50,h=5,show=false) {
-    if (show) {
-        translate([0,0,h/2+wall_h])
-        cube([w,l,h],center=true);
+    difference() {
+        translate([-bat_w/2-wall_w-clearance+7.1,-bat_l/2-wall_w-clearance+7.1,bat_h+clearance+wall_h])
+            rotate([0,0,45])
+                cylinder(10,10,0,$fn=4);
+        translate([-bat_w/2-wall_w-clearance+7.1+wall_w,-bat_l/2-wall_w-clearance+7.1+wall_w,bat_h+clearance+wall_h])
+            rotate([0,0,45])
+            cylinder(10,10,0,$fn=4);
+        cylinder(20,r=pcb_d/2+clearance);
     }
     difference() {
-        translate([0,0,h/8+wall_h])
-        cube([w+clearance*2+wall_w,l+clearance*2+wall_w,h/4],center=true);
-        translate([0,0,h/2+wall_h])
-        cube([w+clearance*2,l+clearance*2,h],center=true);
-        
+        translate([bat_w/2+wall_w+clearance-7.1,-bat_l/2-wall_w-clearance+7.1,bat_h+clearance+wall_h])
+            rotate([0,0,45])
+                cylinder(10,10,0,$fn=4);
+        translate([bat_w/2+clearance-7.1,-bat_l/2-clearance+7.1,bat_h+clearance+wall_h])
+            rotate([0,0,45])
+            cylinder(10,10,0,$fn=4);
+        cylinder(20,r=pcb_d/2+clearance);
+    }
+    difference() {
+        translate([-bat_w/2-wall_w-clearance+7.1,bat_l/2+wall_w+clearance-7.1,bat_h+clearance+wall_h])
+            rotate([0,0,45])
+                cylinder(10,10,0,$fn=4);
+        translate([-bat_w/2-wall_w-clearance+7.1+wall_w,bat_l/2+clearance-7.1,bat_h+clearance+wall_h])
+            rotate([0,0,45])
+            cylinder(10,10,0,$fn=4);
+        cylinder(20,r=pcb_d/2+clearance);
+    }
+    difference() {
+        translate([bat_w/2+wall_w+clearance-7.1,bat_l/2+wall_w+clearance-7.1,bat_h+clearance+wall_h])
+            rotate([0,0,45])
+                cylinder(10,10,0,$fn=4);
+        translate([bat_w/2+clearance-7.1,bat_l/2+clearance-7.1,bat_h+clearance+wall_h])
+            rotate([0,0,45])
+            cylinder(10,10,0,$fn=4);
+        cylinder(20,r=pcb_d/2+clearance);
+    }
+
+    // Base to PCB Spacers
+    pcb_mount(x=1,y=1,h=bot_h+clearance);
+    pcb_mount(x=1,y=-1,h=bot_h+clearance);
+    pcb_mount(x=-1,y=1,h=bot_h+clearance);
+    pcb_mount(x=-1,y=-1,h=bot_h+clearance);
+    
+    // PCB to Cover Spacers
+    if (false) {
+        pcb_mount(1,1,top_h+clearance,f=bot_h+pcb_h+clearance);
+        pcb_mount(1,-1,top_h+clearance,f=bot_h+pcb_h+clearance);
+        pcb_mount(-1,1,top_h+clearance,f=bot_h+pcb_h+clearance);
+        pcb_mount(-1,-1,top_h+clearance,f=bot_h+pcb_h+clearance);
+    } else {
+        pcb_mount(1.15,1,top_h+clearance);
+        pcb_mount(1.15,-1,top_h+clearance);
+        pcb_mount(-1.15,1,top_h+clearance);
+        pcb_mount(-1.15,-1,top_h+clearance);
     }
 }
 
-module pcb_mount(x,y) {
-    translate([37*x,40.5*y,wall_h]) {
+module battery(w=bat_w,l=bat_l,h=bat_h) {
+    color("yellow", 0.5)
+    translate([0,0,h/2+wall_h+clearance/2])
+    cube([w,l,h],center=true);
+}
+
+module pcb_mount(x,y,h,f=0) {
+    translate([37*x,40.5*y,wall_h+f]) {
         difference() {
-            cylinder(d1=16,d2=10,h=bot_h+clearance);
-            translate([0,0,bot_h+clearance-6]) cylinder(d=4,h=6+clearance);
+            cylinder(d=5,h=h);
+            translate([0,0,-1]) cylinder(d=3.2,h=h+2);
         }
     }
 }
@@ -125,7 +210,19 @@ module pcb_mount(x,y) {
 module cover() {
   color("grey", 0.3)
     translate([0,0,max_h+wall_h+clearance*2])
-    cylinder(r=pcb_d/2+clearance+wall_w,h=3);
+    cylinder(r=pcb_d/2+clearance+wall_w,h=wall_h*2);
+}
+
+module base() {
+  color("blue", 0.3)
+    difference() {
+        cylinder(r=pcb_d/2+     clearance+wall_w,h=wall_h);
+    
+        translate([100+wall_w+clearance,0,0])
+            cube([100,100,40],center=true);
+        translate([-100-wall_w-clearance,0,0])
+            cube([100,100,40],center=true);
+    }
 }
 
 
@@ -135,8 +232,8 @@ module electronics() {
         difference() {
         union() {
             pcb();
-            //top();
-            //bottom();
+            top();
+            bottom();
         }
         translate([100,0,0])
         cube([100,200,40],center=true);
@@ -147,9 +244,15 @@ module electronics() {
 }
 module pcb() {
     // PCB Board
+    color("green",0.8)
     difference() {
-        color("green",1)
+        translate([0,0,wall_h+bot_h+clearance])
         cylinder(d=pcb_d, h=pcb_h);
+        
+        translate([100,0,0])
+            cube([100,100,40],center=true);
+        translate([-100,0,0])
+            cube([100,100,40],center=true);
     
         pcb_hole(x=1,y=1);
         pcb_hole(x=-1,y=1);
