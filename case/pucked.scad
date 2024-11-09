@@ -120,8 +120,9 @@ module case() {
         cube([100,100,40],center=true);
         
         }
+        // USB Port
         rotate([0,0,-16])
-        translate([0,pcb_d/2+clearance+wall_w/2,bot_h+wall_h+clearance/2])
+        translate([0,pcb_d/2+clearance+wall_w/2,bot_h+wall_h])
             cube([10,wall_w*2,5],center=true);
     }
     
@@ -178,6 +179,15 @@ module case() {
     pcb_mount(x=-1,y=1,h=bot_h+clearance);
     pcb_mount(x=-1,y=-1,h=bot_h+clearance);
     
+    translate([42.5,42,bat_h+clearance/4])
+    cube([8.5,wall_w,bat_h+clearance], true);
+    translate([42.5,-42,bat_h+clearance/4])
+    cube([8.5,wall_w,bat_h+clearance], true);
+    translate([-42.5,42,bat_h+clearance/4])
+    cube([8.5,wall_w,bat_h+clearance], true);
+    translate([-42.5,-42,bat_h+clearance/4])
+    cube([8.5,wall_w,bat_h+clearance], true);
+    
     // PCB to Cover Spacers
     if (false) {
         pcb_mount(1,1,top_h+clearance,f=bot_h+pcb_h+clearance);
@@ -185,10 +195,10 @@ module case() {
         pcb_mount(-1,1,top_h+clearance,f=bot_h+pcb_h+clearance);
         pcb_mount(-1,-1,top_h+clearance,f=bot_h+pcb_h+clearance);
     } else {
-        pcb_mount(1.15,1,top_h+clearance);
-        pcb_mount(1.15,-1,top_h+clearance);
-        pcb_mount(-1.15,1,top_h+clearance);
-        pcb_mount(-1.15,-1,top_h+clearance);
+        //pcb_mount(0,0,top_h+clearance);
+        //pcb_mount(1.15,-1,top_h+clearance);
+        //pcb_mount(-1.15,1,top_h+clearance);
+        //pcb_mount(-1.15,-1,top_h+clearance);
     }
 }
 
