@@ -2,7 +2,7 @@ $fn=256;
 pcb_d=123;
 bat_w=65;
 bat_l=113;
-bat_h = 5.5;
+bat_h = 5.5*2;
 pcb_h=1.5;
 top_h = 2;
 bot_h = 6+bat_h;
@@ -12,13 +12,15 @@ clearance = 1;
 wall_h = 2.54;
 wall_w = 1.6;
 
+// Use for DXF/SVG Laser Export
+// projection(cut = false)
+
 if (true) {
     case();
 } else {
     difference() {
-        // case();
-        // pattern();
-        //carve();
+        case();
+        pattern();
     }
 }
 //pcb();
@@ -26,11 +28,6 @@ if (true) {
 //base();
 //electronics();
 //battery();
-
-module carve() {
-    cube([90,60,10],center=true);
-    cube([54,106,10],center=true);
-}
 
 module pattern() {
   translate([17,-72,-.79]) {
@@ -90,12 +87,12 @@ module case() {
         cylinder(r=pcb_d/2+clearance+wall_w,h=max_h+clearance*2);
 
         translate([100+wall_w+clearance,0,0])
-        cube([100,100,40],center=true);
+        cube(100,center=true);
         translate([-100-wall_w-clearance,0,0])
-        cube([100,100,40],center=true);
+        cube(100,center=true);
        
        // Battery Expansion
-       translate([0,0,bat_h+clearance/4])
+       translate([0,0,bat_h-clearance*2])
                 cube([bat_w+clearance*2,bat_l+clearance*2,bat_h+clearance*2],center=true);
        translate([-bat_w/2-clearance+7.1,-bat_l/2-clearance+7.1,bat_h+clearance+wall_h])
                 rotate([0,0,45])
@@ -115,9 +112,9 @@ module case() {
             translate([0,0,wall_h-2])
            cylinder(r=pcb_d/2+clearance, h=max_h+clearance*3+2);
             translate([100+clearance,0,0])
-        cube([100,100,40],center=true);
+        cube(100,center=true);
         translate([-100-clearance,0,0])
-        cube([100,100,40],center=true);
+        cube(100,center=true);
         
         }
         // USB Port
@@ -130,7 +127,7 @@ module case() {
     difference() {
         translate([0,0,(bat_h+clearance)/2+wall_h])
         cube([bat_w+clearance*2+wall_w*2,bat_l+clearance*2+wall_w*2,bat_h+clearance],center=true);
-        translate([0,0,bat_h+1])
+        translate([0,0,bat_h-2])
         cube([bat_w+clearance*2,bat_l+clearance*2,bat_h+clearance+2],center=true);
         cube([bat_w+wall_w+clearance*4,80,30],center=true);
         cube([49,bat_l+wall_w+clearance*4,30],center=true);
@@ -143,7 +140,7 @@ module case() {
         translate([-bat_w/2-wall_w-clearance+7.1+wall_w,-bat_l/2-wall_w-clearance+7.1+wall_w,bat_h+clearance+wall_h])
             rotate([0,0,45])
             cylinder(10,10,0,$fn=4);
-        cylinder(20,r=pcb_d/2+clearance);
+        cylinder(30,r=pcb_d/2+clearance);
     }
     difference() {
         translate([bat_w/2+wall_w+clearance-7.1,-bat_l/2-wall_w-clearance+7.1,bat_h+clearance+wall_h])
@@ -152,7 +149,7 @@ module case() {
         translate([bat_w/2+clearance-7.1,-bat_l/2-clearance+7.1,bat_h+clearance+wall_h])
             rotate([0,0,45])
             cylinder(10,10,0,$fn=4);
-        cylinder(20,r=pcb_d/2+clearance);
+        cylinder(30,r=pcb_d/2+clearance);
     }
     difference() {
         translate([-bat_w/2-wall_w-clearance+7.1,bat_l/2+wall_w+clearance-7.1,bat_h+clearance+wall_h])
@@ -161,7 +158,7 @@ module case() {
         translate([-bat_w/2-wall_w-clearance+7.1+wall_w,bat_l/2+clearance-7.1,bat_h+clearance+wall_h])
             rotate([0,0,45])
             cylinder(10,10,0,$fn=4);
-        cylinder(20,r=pcb_d/2+clearance);
+        cylinder(30,r=pcb_d/2+clearance);
     }
     difference() {
         translate([bat_w/2+wall_w+clearance-7.1,bat_l/2+wall_w+clearance-7.1,bat_h+clearance+wall_h])
@@ -170,7 +167,7 @@ module case() {
         translate([bat_w/2+clearance-7.1,bat_l/2+clearance-7.1,bat_h+clearance+wall_h])
             rotate([0,0,45])
             cylinder(10,10,0,$fn=4);
-        cylinder(20,r=pcb_d/2+clearance);
+        cylinder(30,r=pcb_d/2+clearance);
     }
 
     // Base to PCB Spacers
@@ -179,13 +176,13 @@ module case() {
     pcb_mount(x=-1,y=1,h=bot_h+clearance);
     pcb_mount(x=-1,y=-1,h=bot_h+clearance);
     
-    translate([42.5,42,bat_h+clearance/4])
+    translate([42.5,42,(bat_h+clearance)/2+wall_h])
     cube([8.5,wall_w,bat_h+clearance], true);
-    translate([42.5,-42,bat_h+clearance/4])
+    translate([42.5,-42,(bat_h+clearance)/2+wall_h])
     cube([8.5,wall_w,bat_h+clearance], true);
-    translate([-42.5,42,bat_h+clearance/4])
+    translate([-42.5,42,(bat_h+clearance)/2+wall_h])
     cube([8.5,wall_w,bat_h+clearance], true);
-    translate([-42.5,-42,bat_h+clearance/4])
+    translate([-42.5,-42,(bat_h+clearance)/2+wall_h])
     cube([8.5,wall_w,bat_h+clearance], true);
     
     // PCB to Cover Spacers
